@@ -1,54 +1,38 @@
 class Solution {
-    vector<int> parent;
-    vector<int> rank;
-    int find(int x){
-        if(parent[x] == x)
-            return x;
-        return parent[x] = find(parent[x]);
-    }
 
-    void unionGraph(int u, int v){
-        int upu = find(u), upv = find(v);
+    void dfs(int node, vector<int> adj[], vector<bool> &vis){
+        vis[node] = true;
 
-        if(rank[upu] < rank[upv]){
-            parent[upu] = upv;
-        }else if(rank[upv] < rank[upu]){
-            parent[upv] = upu;
-        }else{
-            parent[upu] = upv;
-            rank[upv]++;
-        }
-    }
-public:
-    int makeConnected(int n, vector<vector<int>>& con) {
-        int m = con.size();
-
-        if(m < n-1)
-            return -1;
-        
-        rank.resize(n, 0);
-        parent.resize(n);
-        for(int  i = 0; i<n; i++) parent[i] = i;
-
-        for(vector<int> &c: con){
-            unionGraph(c[0], c[1]);
-        }
-        int ans = 0;
-
-        for(int  i = 0; i<n; i++){
-            if(find(i) != find(0)){
-                unionGraph(i, 0);
-                ans++;
+        for(auto n: adj[node]){
+            if(!vis[n]){
+                dfs(n, adj, vis);
             }
         }
 
-        return ans;
+        return;
+    }
+public:
+    int makeConnected(int n, vector<vector<int>>& connections) {
 
-        
-    
-        
+        if(connections.size() < n-1)
+            return -1;
+        vector<int> adj[n];
 
+        for(auto &c: connections){
+            adj[c[0]].push_back(c[1]);
+            adj[c[1]].push_back(c[0]);
 
-        
+        }
+
+        vector<bool> vis(n, false);
+        int cables = -1;
+        for(int i = 0; i<n; i++){
+            if(!vis[i]){
+                dfs(i, adj, vis);
+                cables++;
+            }
+        }
+
+        return cables;
     }
 };
