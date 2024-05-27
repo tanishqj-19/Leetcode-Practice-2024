@@ -1,11 +1,11 @@
 class DisjointSet{
 public:
-    vector<int> parent, rank;
+    vector<int> parent, size;
 
     DisjointSet(int n){
-        for(int i = 0; i<=n; i++){
+        for(int i = 0; i<n; i++){
            parent.push_back(i);
-           rank.push_back(0); 
+           size.push_back(1); 
         }
     }
 
@@ -19,13 +19,16 @@ public:
     void unionRank(int u, int v){
         int ulu = find(u), ulv = find(v);
 
-        if(rank[ulu] > rank[ulv]){
+        if(ulu == ulv)
+            return;
+        if(size[ulu] >= size[ulv]){
             parent[ulv] = ulu;
-        }else if(rank[ulv] > rank[ulu])
-            parent[ulu] = ulv;
+            size[ulu] += size[ulv];
+        }
         else{
-            rank[ulu]++;
-            parent[ulv] = ulu;
+            parent[ulu] = ulv;
+            size[ulv] += size[ulu];
+
         }
 
         return;
@@ -60,11 +63,7 @@ public:
             }
         }
 
-        unordered_map<int, int> cnt;
-
-        for(int i = 0; i<n *n ; i++){
-            cnt[ds.find(i)]++;
-        }
+       
 
         int maxLand = 0;
 
@@ -85,7 +84,8 @@ public:
                     }
 
                     for(auto &it: st){
-                        currMax += cnt[it];
+                        
+                        currMax += ds.size[it];
                     }
                     currMax++;
                     maxLand = max(currMax, maxLand);
