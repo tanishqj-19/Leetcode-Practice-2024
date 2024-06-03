@@ -1,4 +1,7 @@
 class Solution {
+    bool isOdd(int x){
+        return x & (1) != 0;
+    }
 public:
     vector<bool> isArraySpecial(vector<int>& nums, vector<vector<int>>& queries) {
 
@@ -7,9 +10,14 @@ public:
         parity.push_back(0);
 
         for(int i =1; i<n; i++){
-            int val = (nums[i] % 2 == nums[i-1] % 2);
+            if(isOdd(nums[i]) == isOdd(nums[i-1]))
+                parity.push_back(parity.back() + 1);
+            else
+                parity.push_back(parity.back() + 0);
 
-            parity.push_back(parity.back() + val);
+
+
+
         }
 
         vector<bool>ans;
