@@ -10,13 +10,15 @@ public:
                 cnt++;
             }
 
-            while(cnt > k && l < n){
-                cnt -= (nums[l] == 0);
+            if(cnt > k){
+                if(nums[l] == 0){
+                    cnt--;
+                }
                 l++;
             }
                 
             
-            maxlen = max(maxlen, r - l + 1);
+            if(cnt <= k) maxlen = max(maxlen, r - l + 1);
             r++;
 
         }
