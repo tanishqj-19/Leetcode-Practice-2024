@@ -10,7 +10,7 @@ public:
         for(; r < n; r++){
             freq[fruits[r]]++;
 
-            while(freq.size() > 2){
+            if(freq.size() > 2){
                 freq[fruits[l]]--;
                 if(freq[fruits[l]] == 0)
                     freq.erase(fruits[l]);
