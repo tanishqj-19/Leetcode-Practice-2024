@@ -3,20 +3,21 @@ public:
     int longestPalindrome(string s) {
         int maxlen = 0;
 
-        unordered_map<char, int> count;
+        vector<int> count(213, 0);
 
         for(auto &c: s) count[c]++;
 
        
         int odd = 0;
-        for(auto &x: count){
-            if(x.second % 2 == 0)
-                maxlen += x.second;
-            else {
+        for(int i = 0; i<213; i++){
+            if(count[i] % 2 == 0){
+                maxlen += count[i];
+            }else{
+                maxlen += (count[i] - 1);
                 odd = 1;
-                maxlen += (x.second - 1);
             }
         }
+        
 
         return maxlen + odd;
     }
