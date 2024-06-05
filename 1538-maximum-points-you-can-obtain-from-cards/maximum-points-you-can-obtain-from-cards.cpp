@@ -6,12 +6,13 @@ public:
 
         for(; i < k; i++) leftsum += cardPoints[i];
     
-        int j = n-1, maxsum = leftsum;
-        i = k-1;
-        while(i >= 0){
-            leftsum -= cardPoints[i--];
-            rightsum += cardPoints[j--];
+        int maxsum = leftsum;
+        i = 0;
+        while(i < k){
+            leftsum -= cardPoints[k - i -1];
+            rightsum += cardPoints[n-i-1];
             maxsum = max(maxsum, leftsum + rightsum);
+            i++;
         }
 
         return maxsum;
