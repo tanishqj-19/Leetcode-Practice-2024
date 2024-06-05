@@ -2,13 +2,13 @@ class Solution {
 public:
     int characterReplacement(string s, int k) {
         int n = s.size(), maxlen = 0;
-        unordered_map<char, int> mp;
-        for(auto &c: s){
-            mp[c]++;
-        }
+        // unordered_map<char, int> mp;
+        // for(auto &c: s){
+        //     mp[c]++;
+        // }
 
-        for(auto &x: mp){
-            char c = x.first;
+        for(char c = 'A'; c <= 'Z'; c++){
+            
             int i = 0, j = 0, cnt = 0;
 
             for(; j < n; j++){
