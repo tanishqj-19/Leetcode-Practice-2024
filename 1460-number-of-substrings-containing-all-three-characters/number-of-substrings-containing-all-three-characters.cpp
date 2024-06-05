@@ -1,16 +1,13 @@
 class Solution {
 public:
     int numberOfSubstrings(string s) {
-        int n = s.size(), i = 0, j = 0;
-        int count[3] = {0}, total = 0;
+        int n = s.size(),  j = 0;
+        int total = 0;
+        vector<int> last(3, -1);
         for(; j< n; j++){
-            count[s[j] - 'a']++;
+            last[s[j] - 'a'] = j;
 
-            while(count[0] >= 1 && count[1] >= 1 && count[2] >= 1){
-                total += (n-j);
-                count[s[i] - 'a']--;
-                i++;
-            }
+            total += (min(last[0], min(last[1], last[2])) + 1);
 
 
         }
