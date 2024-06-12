@@ -5,19 +5,33 @@ public:
 
         int i = 0, j = 0;
 
-        while(j < m){
-            nums1.push_back(nums2[j++]);
+       int m1 = 0 ,m2= 0;
+       
+        int size = n + m;
+        
+        for(int c = 0; c <= size/2; c++){
+            m2 = m1;
+            if(i < n && j < m){
+                if(nums1[i] < nums2[j]){
+                    m1 = nums1[i];
+                    i++;
+                }else{
+                    m1 = nums2[j++];
+                }
+            }else if(i < n){
+                m1 = nums1[i];
+                    i++;
+            }else if(j < m)
+                 m1 = nums2[j++];
+                
         }
+        
+        if(size % 2){
+            return m1/1.0;
+        }else
+            return (double) (m1 + m2) / 2.0;
 
-        sort(nums1.begin(), nums1.end());
-
-        n = nums1.size();
-        if(n % 2){
-            double mid = nums1[n/2] / 1.0;
-            return mid;
-        }else{
-            double mid = (nums1[n/2] + nums1[n/2-1]) / 2.0;
-            return mid / 1.0;
-        }
+  
+        
     }
 };
