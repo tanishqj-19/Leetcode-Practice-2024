@@ -5,13 +5,24 @@ public:
         int n = nums.size();
         int moves = 0;
         
-        sort(nums.begin(), nums.end());
-        for(int i = 1; i<n; i++){
+        unordered_map<int, int> freq;
+        int sz = 0;
+        for(int &i: nums){
+            freq[i]++;
+            sz = max(sz, i);
+
+        }
+        sz += (n + 1);
+
+        for(int i = 0; i<=sz; i++){
             
-            if(nums[i] <= nums[i-1]){
-                moves += (nums[i-1] + 1 - nums[i]);
-                nums[i] = nums[i-1] + 1;
-            }
+            if(freq[i] <= 1) continue;
+
+            int dup = freq[i] -1;
+            freq[i] = 1;
+            freq[i + 1] += dup;
+            moves += dup;
+            
         }
 
 
