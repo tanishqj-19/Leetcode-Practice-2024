@@ -7,13 +7,13 @@ public:
         for(int  i = 0; i<=sqrt(c); i++){
             long long x = pow(i, 2);
             mp.insert(x);
-        }
 
-
-        for(auto &x: mp){
             if(mp.count(c - x) > 0)
                 return true;
+
         }
+
+
 
         return false;
     }
