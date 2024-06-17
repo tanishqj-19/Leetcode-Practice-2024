@@ -2,18 +2,18 @@ class Solution {
 public:
     bool judgeSquareSum(int c) {
         
-        unordered_set<long long> mp;
+        long long  low = 0, high = (long) sqrt(c);
 
-        for(int  i = 0; i<=sqrt(c); i++){
-            long long x = pow(i, 2);
-            mp.insert(x);
+        while(low <= high){
+            long long mid = low * low + high * high;
 
-            if(mp.count(c - x) > 0)
+            if(mid == c)
                 return true;
-
+            if(mid > c){
+                high--;
+            }else
+                low++;
         }
-
-
 
         return false;
     }
