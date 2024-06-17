@@ -2,15 +2,16 @@ class Solution {
 public:
     bool judgeSquareSum(int c) {
         
-        unordered_map<long long, bool> mp;
+        unordered_set<long long> mp;
 
         for(int  i = 0; i<=sqrt(c); i++){
-            mp[pow(i, 2)] = true;
+            long long x = pow(i, 2);
+            mp.insert(x);
         }
 
 
-        for(int i = 0; i<=sqrt(c); i++){
-            if(mp.find(c - pow(i, 2)) != mp.end())
+        for(auto &x: mp){
+            if(mp.count(c - x) > 0)
                 return true;
         }
 
