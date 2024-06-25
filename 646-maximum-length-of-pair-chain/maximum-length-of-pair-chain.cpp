@@ -1,26 +1,37 @@
 class Solution {
-    int solve(vector<vector<int>>& pairs, int i, int prev, vector<vector<int>>& dp){
-        if(i >= pairs.size())
-            return 0;
+    // int solve(vector<vector<int>>& pairs, int i, int prev, vector<vector<int>>& dp){
+    //     if(i >= pairs.size())
+    //         return 0;
         
-        if(dp[i][prev + 1000] != -1)
-            return dp[i][prev + 1000];
+    //     if(dp[i][prev + 1000] != -1)
+    //         return dp[i][prev + 1000];
         
-        int notPick  = solve(pairs, i+1, prev,dp);
-        int pick  = 0;
-        if(prev == 1001 || pairs[i][0] > prev)
-            pick = 1 + solve(pairs, i + 1, pairs[i][1],dp);
+    //     int notPick  = solve(pairs, i+1, prev,dp);
+    //     int pick  = 0;
+    //     if(prev == 1001 || pairs[i][0] > prev)
+    //         pick = 1 + solve(pairs, i + 1, pairs[i][1],dp);
 
-        return dp[i][prev + 1000]  = max(pick, notPick);
+    //     return dp[i][prev + 1000]  = max(pick, notPick);
+    // }
+
+    static bool cmp(vector<int> &a, vector<int> &b){
+        return a[1] < b[1];
     }
 
    
 public:
     int findLongestChain(vector<vector<int>>& pairs) {
-        sort(pairs.begin(), pairs.end());
+        sort(pairs.begin(), pairs.end(), cmp);
         int n = pairs.size();
-        vector<vector<int>> dp(n, vector<int>(2002, -1));
+        
+        int prev = -1e9, cnt = 0;
+        for(int i = 0; i<n; i++){
+            if(pairs[i][0] > prev){
+                prev = pairs[i][1];
+                cnt++;
+            }
+        }
 
-        return solve(pairs, 0, 1001, dp);
+        return cnt;
     }
 };
