@@ -14,24 +14,23 @@ class Solution {
     //     return dp[i][prev + 1000]  = max(pick, notPick);
     // }
 
-    static bool cmp(vector<int> &a, vector<int> &b){
-        return a[1] < b[1];
-    }
+    
 
    
 public:
     int findLongestChain(vector<vector<int>>& pairs) {
-        sort(pairs.begin(), pairs.end(), cmp);
+        sort(pairs.begin(), pairs.end());
         int n = pairs.size();
         
-        int prev = -1e9, cnt = 0;
-        for(int i = 0; i<n; i++){
-            if(pairs[i][0] > prev){
-                prev = pairs[i][1];
-                cnt++;
-            }
-        }
+        vector<int> dp(n, 1);   
 
-        return cnt;
+        for(int i = 0; i<n; i++){
+            for(int j = 0; j<i;j++){
+                if(pairs[i][0] > pairs[j][1])
+                    dp[i] = max(dp[j] + 1, dp[i]);
+            }
+            // cnt = max(dp[i], cnt);
+        }
+        return dp[n-1];
     }
 };
