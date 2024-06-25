@@ -21,7 +21,15 @@ class Solution {
     }
 public:
     int numTilings(int n) {
-        vector<vector<int>> dp(n + 1, vector<int>(2, -1));
-        return solve(n, 0, false, dp);
+        
+        vector<vector<long long>> dp(n + 2, vector<long long>(2, 0));
+
+        dp[1] = {1, 1}; dp[2] = {2, 2};
+
+        for(int i = 3; i<=n; i++){
+            dp[i][0] = (dp[i-1][0] + dp[i-2][0] + 2 * dp[i-2][1]) % MOD;
+            dp[i][1] = (dp[i-1][0] + dp[i-1][1]) % MOD;
+        }
+        return dp[n][0];
     }
 };
