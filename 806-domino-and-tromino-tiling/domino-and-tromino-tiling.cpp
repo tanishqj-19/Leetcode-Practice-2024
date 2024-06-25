@@ -1,19 +1,27 @@
 class Solution {
-    int mod = 1e9 + 7;
-public:
-    int numTilings(int n) {
-        if(n == 1 || n == 2)
-            return n;
-        if(n == 3)
-            return 5;
-        vector<long long > dp(n + 1, 0);
-        dp[0] = dp[1] = 1;
-        dp[2] = 2, dp[3] = 5;
 
-        for(int  i = 4; i<=n; i++){
-            dp[i] = (dp[i-1] * 2 + dp[i-3]) % mod;
+    
+    const int MOD = 1e9 + 7;
+
+    long  solve(int n, int i, bool isGap, vector<vector<int>> &dp){
+        if(i > n)
+            return 0;
+        if(i == n)
+            return !isGap;
+        if(dp[i][isGap] != -1)
+            return dp[i][isGap];
+        
+        if(isGap){
+            return dp[i][isGap] = (solve(n, i+1, false, dp) % MOD + solve(n, i + 1, true, dp) % MOD) % MOD;
         }
 
-        return dp[n];
+        return dp[i][isGap] = (solve(n, i+1, false, dp) + solve(n, i+2, false, dp) + (2 * solve(n, i+2, true, dp)) % MOD) % MOD;
+        
+
+    }
+public:
+    int numTilings(int n) {
+        vector<vector<int>> dp(n + 1, vector<int>(2, -1));
+        return solve(n, 0, false, dp);
     }
 };
