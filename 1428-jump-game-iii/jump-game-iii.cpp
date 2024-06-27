@@ -1,12 +1,10 @@
 class Solution {
-    int s = -1;
     vector<int> vis;
     bool solve(vector<int> &arr, int i, int n){
 
         if(i < 0 || i >= n || vis[i])
             return false;
-        if(s == -1)
-            s = i;
+        
         vis[i] = true;
         if(arr[i] == 0)
             return true;
