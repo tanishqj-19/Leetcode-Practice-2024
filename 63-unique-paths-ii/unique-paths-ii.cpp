@@ -18,23 +18,30 @@ public:
 
     int uniquePathsWithObstacles(vector<vector<int>>& grid) {
         n = grid.size(), m = grid[0].size();
-        vector<vector<int>> dp(n, vector<int>(m, 0));
-        dp[0][0] = (grid[0][0] == 0);
+        vector<int> prev(m, 0);
+        // prev[0] = (grid[0][0] == 0);
 
         for(int i = 0; i < n; i++){
+            vector<int> curr(m, 0);
             for(int j = 0; j<m; j++){
                 // int left = 0, right = 0;
                 if(grid[i][j]) continue;
+                if(i == 0 && j == 0){
+                    curr[j] = 1;
+                    continue;
+                }
+
                 if(i > 0)
-                    dp[i][j] += dp[i-1][j];
+                    curr[j] += prev[j];
                 if(j > 0)
-                    dp[i][j] += dp[i][j-1];
+                    curr[j] += curr[j-1];
 
             }
+            prev = curr;
         }
 
         
-        return dp[n-1][m-1];
+        return prev[m-1];
 
 
     }
