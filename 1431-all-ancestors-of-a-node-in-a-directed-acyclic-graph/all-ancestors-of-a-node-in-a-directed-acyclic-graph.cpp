@@ -1,46 +1,32 @@
 class Solution {
 
-    vector<bool> vis;
-    void dfs(int node, vector<vector<int>> &adj, vector<set<int>> &ancest){
-        if(vis[node])
-            return;
-        vis[node] = true;
+    
+    void dfs(int node, int ancestor, vector<vector<int>> &adj, vector<vector<int>> &ancest){
+        
 
         for(auto &nei: adj[node]){
            
-            if(!vis[nei])
-                dfs(nei, adj, ancest);
-            if(ancest[nei].empty() == false){
-                for(int i: ancest[nei])
-                    ancest[node].insert(i);
-
+            if(ancest[nei].empty() || ancest[nei].back() != ancestor){
+                ancest[nei].push_back(ancestor);
+                dfs(nei, ancestor, adj, ancest);
             }
-            ancest[node].insert(nei);
+            
         }
     }
 public:
     vector<vector<int>> getAncestors(int n, vector<vector<int>>& edges) {
         vector<vector<int>> adj(n);
-        vector<set<int>> ancest(n);
+        vector<vector<int>> ancest(n);
         for(auto &e: edges){
-            adj[e[1]].push_back(e[0]);
+            adj[e[0]].push_back(e[1]);
         }
-        vis.resize(n, false);
 
         for(int i = 0; i<n; i++){
-            if(!vis[i]){
-                dfs(i, adj, ancest);
-            }
+            dfs(i, i, adj, ancest);
         }
 
-        vector<vector<int>> res(n);
-        for(int i = 0; i<n; i++){
-            if(!ancest[i].empty()){
-                for(auto &x: ancest[i])
-                    res[i].push_back(x);
-            }
-        }
+        
 
-        return res;
+        return ancest;
     }
 };
