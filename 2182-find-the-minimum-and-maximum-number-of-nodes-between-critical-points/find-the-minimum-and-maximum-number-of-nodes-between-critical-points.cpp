@@ -17,7 +17,7 @@ public:
             temp =  temp->next;
         }
 
-        if(critical.empty() || critical.size() == 1)
+        if(critical.size() <= 1)
             return {-1,-1};
         
         int maxi = critical.back() - critical[0], mini = 1e9;
