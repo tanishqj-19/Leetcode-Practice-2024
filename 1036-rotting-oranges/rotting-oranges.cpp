@@ -8,13 +8,14 @@ public:
 
         queue<vector<int>> q;
         vector<vector<bool>> vis(n, vector<bool>(m, false));
-
+        int fresh = 0;
         for(int i = 0; i<n ; i++){
             for(int j=0; j<m; j++){
                 if(grid[i][j] == 2){
                     vis[i][j] =true;
                     q.push({0, i, j});
-                }
+                }else if(grid[i][j] == 1)
+                    fresh++;
             }
         }
 
@@ -31,18 +32,13 @@ public:
 
                 if(i < 0 || j < 0 || j >= m || i >= n || grid[i][j] != 1 || vis[i][j])
                     continue;
+                fresh--;
                 vis[i][j] = true;
                 q.push({t + 1, i, j});
             }
         }
 
-        for(int i = 0; i<n; i++){
-            for(int j = 0; j<m; j++){
-                if(grid[i][j] == 1 && !vis[i][j])
-                    return -1;
-            }
-        }
-
-        return minTime;
+        
+        return fresh == 0 ? minTime: -1;
     }
 };
