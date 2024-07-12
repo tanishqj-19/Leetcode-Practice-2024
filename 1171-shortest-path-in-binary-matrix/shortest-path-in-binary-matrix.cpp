@@ -1,37 +1,42 @@
+#define piii pair<int, pair<int, int>>
 class Solution {
 public:
     int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
-        int n = grid.size(); int m = grid[0].size();
-
+        int n = grid.size();
 
         if(grid[0][0] != 0 || grid[n-1][n-1] != 0)
             return -1;
+        queue<piii> pq;
+        pq.push({0, {0, 0}});
 
-        queue<pair<int, int>> q;
-        vector<vector<int>> directions = {{1,1}, {0,1},{1,0},{0,-1},{-1,0},{-1, -1},{1, -1},{-1, 1}};
-        q.push({0, 0});
+        vector<vector<int>> dis(n, vector<int>(n, 1e9));
+        dis[0][0] = 0;
+
+         vector<vector<int>> dir = {{1,1}, {0,1},{1,0},{0,-1},{-1,0},{-1, -1},{1, -1},{-1, 1}};
+
         grid[0][0] = 1;
 
-        while(!q.empty()){
-            auto curr = q.front();
-            int cx = curr.first , cy = curr.second;
-            q.pop();
-            if(cx == n-1 && cy == n-1) return grid[cx][cy];
-            
-            for(auto& dir: directions){
-                int nx = cx + dir[0];
-                int ny = cy + dir[1];
-                
-                if((nx >= 0 && nx < n) && (ny >= 0 && ny < n) && (grid[nx][ny] == 0)){
-                    q.push({nx, ny});
-                    grid[nx][ny] = grid[cx][cy] + 1;
+        while(pq.empty() == false){
+            int d = pq.front().first, i = pq.front().second.first, j = pq.front().second.second;
+            pq.pop();
 
+            if(i == n-1 && j == n-1)
+                return d + 1;
+
+            for(auto &k: dir){
+                int nr = i + k[0], nc = j + k[1];
+
+                if(nr >= 0 && nr < n && nc >= 0 && nc < n && grid[nr][nc] == 0 && d + 1 <dis[nr][nc] ){
+                    pq.push({d + 1, {nr, nc}});
+                    grid[nr][nc] = 1;
                 }
+                    
             }
-        }
 
+
+
+
+        }
         return -1;
-        
-        
     }
 };
