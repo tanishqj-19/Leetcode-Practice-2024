@@ -1,7 +1,29 @@
 class Solution {
+
+    void count_sort(vector<int> &nums){
+        int sz = 0;
+
+        for(int &i: nums) sz = max(sz, i);
+
+        vector<int>count(sz + 1, 0);
+
+        for(int &i: nums) count[i]++;
+
+        int idx = 0;
+
+        for(int i = 0; i<=sz; i++){
+            while(count[i] > 0){
+                nums[idx++] = i;
+                count[i]--;
+            }
+            
+        } 
+
+        return;
+    }
 public:
     int maxFrequency(vector<int>& nums, int k) {
-        sort(nums.begin(), nums.end());
+        count_sort(nums);
         int n = nums.size();
 
         long long i = 0, j = 0, currSum = 0;
@@ -18,12 +40,6 @@ public:
            
         }
 
-        return j - i;
-
-
-
-
-       
-        return 0;
+        return j - i;;
     }
 };
