@@ -2,44 +2,23 @@ class Solution {
 public:
     int minMovesToMakePalindrome(string s) {
 
-        int n = s.size();
+        int  moves = 0;
 
-        
+        while(!s.empty()){
+            int k = s.find(s.back());
 
-        int i = 0, j = n-1, center = -1;
-        
-        int moves = 0;
-        while(i < j){
-            if(s[i] == s[j]){
-                i++;
-                j--;
+            if(k == s.size() - 1){
+                moves += k/2;
             }else{
-                int k = i + 1;
+                moves += k;
+                s.erase(k, 1);
 
-                while(k < j){
-                    if(s[j] == s[k]){
-                        break;
-                    }
-                    k++;
-                }
-                if(k == j){
-                    center = j;
-                    j--;
-                    continue;
-                }
-                for(int t = k; t > i; t--){
-                    swap(s[t], s[t-1]);
-                    moves++;
-                }
-                i++;
-                j--;
             }
+            s.pop_back();
         }
+        
 
-        if(center != -1){
-            moves += (center - n/2);
-        }
-
+    
         return moves;
 
 
