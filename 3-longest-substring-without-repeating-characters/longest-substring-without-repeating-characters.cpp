@@ -7,8 +7,7 @@ public:
         int left = 0;
         int maxlen = 0;
         for(int i = 0; i<n; i++){
-            int idx = s[i] - 'a';
-            count[idx]++;
+            
             
             if(count.find(s[i]) != count.end()){
                 left = max(left, count[s[i]] + 1);
