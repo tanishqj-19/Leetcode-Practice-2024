@@ -11,7 +11,7 @@ public:
             pq.push({b, 'b'});
         if(c > 0)
             pq.push({c, 'c'});
-        char prev = '%';
+        
 
         while(!pq.empty()){
             auto [freq, ch] = pq.top(); pq.pop();
