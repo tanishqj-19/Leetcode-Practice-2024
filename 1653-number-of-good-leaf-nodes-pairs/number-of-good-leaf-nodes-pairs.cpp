@@ -20,12 +20,12 @@ class Solution {
 
         vector<int> currD;
         for(int &i: left){
-            if(i + 1 <= distance)
+            if(i + 1 < distance)
                 currD.push_back(i + 1);
         }
 
         for(int &j: right){
-            if(j + 1 <= distance)
+            if(j + 1 < distance)
                 currD.push_back(j + 1);
         }
 
