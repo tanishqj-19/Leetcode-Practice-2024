@@ -1,54 +1,47 @@
 
 class Solution {
-    unordered_set<TreeNode*> leafs;
-    unordered_map<TreeNode*, TreeNode*> parentof;
-    int cnt = 0;
-    void dfs(TreeNode* root){
+    
+    vector<int> dfs(TreeNode* root, int distance, int &count){
         if(!root)
-            return;
+            return {};
+
         if(!root->left && !root->right){
-            leafs.insert(root);
-            return;
-        }else{
-            if(root->left)
-                parentof[root->left] = root;
-            if(root->right)
-                parentof[root->right] = root;
-            dfs(root->left);
-            dfs(root->right);
-
-
+            return {1};
         }
-    }
-    unordered_map<TreeNode*, bool> vis;
+        vector<int> left = dfs(root->left, distance, count);
+        vector<int> right = dfs(root->right, distance, count);
 
-
-    void traversal(TreeNode* root, int d, int &maxD, unordered_map<TreeNode*, bool> &tempVis){
-        if(!root || d > maxD)
-            return;
-        if(leafs.count(root) > 0 && !vis[root] && !tempVis[root]){
-            cnt++;
+        for(int &i: left){
+            for(int &j: right){
+                if(i + j <= distance)
+                    count++;
+            }
         }
-        tempVis[root] = true;
-        traversal(root->left, d + 1, maxD, tempVis);
-        traversal(root->right, d + 1, maxD, tempVis);
-        traversal(parentof[root], d + 1, maxD, tempVis);
+
+        vector<int> currD;
+        for(int &i: left){
+            if(i + 1 <= distance)
+                currD.push_back(i + 1);
+        }
+
+        for(int &j: right){
+            if(j + 1 <= distance)
+                currD.push_back(j + 1);
+        }
+
+        return currD;
 
 
-        
     }
+
+
+    
 public:
     int countPairs(TreeNode* root, int distance) {
-        parentof[root] = nullptr;
-        dfs(root);
-        for(auto &x: leafs){
-            
-            vis[x] = true;
-            unordered_map<TreeNode*, bool> temp;
-            traversal(x, 0, distance, temp);
-            // leafs.erase(x);
-        }
+        
+        int count = 0;
 
-        return cnt;
+        dfs(root, distance, count);
+        return count;
     }
 };
