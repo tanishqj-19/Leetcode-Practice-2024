@@ -6,14 +6,12 @@ public:
         
         int n = nums.size();
 
-        for(int i = 0; i<n; i++){
-            nums[i] = target[i] - nums[i];
-        }
+        
         ll minOps = 0;
         int prev = 0;
 
         for(int i = 0; i<n; i++){
-            
+            nums[i] = target[i] - nums[i];
             if(nums[i] >= 0){
                 if (nums[i] > prev){
                     minOps += (nums[i] - max(prev, 0));
