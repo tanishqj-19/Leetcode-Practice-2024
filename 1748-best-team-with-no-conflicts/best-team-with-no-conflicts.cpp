@@ -27,30 +27,24 @@ public:
     int bestTeamScore(vector<int>& scores, vector<int>& ages) {
         n = scores.size();
 
-        vector<int> curr(n + 1, 0), next(n + 1, 0);
+        vector<int> dp(1001, 0);
         vector<pair<int,int>> arr(n);
 
         for(int i = 0; i<n; i++){
             arr[i] = {ages[i], scores[i]};
         }
 
-        sort(arr.begin(), arr.end(), greater<pair<int, int>> ());
-
-        for(int i = n-1; i>= 0; i--){
-            for(int prev = i-1; prev >= -1; prev--){
-                int notPick = next[prev + 1];
-
-                if(prev != -1 && arr[prev].first > arr[i].first && 
-                    arr[i].second > arr[prev].second){
-                    curr[prev + 1] = notPick;
-                }else{
-                    curr[prev + 1] = max(notPick, arr[i].second + next[i + 1]);
-                }
-
+        sort(arr.begin(), arr.end(),greater<pair<int, int>> ());
+        int maxScore = 0;
+        for(int i = 0; i < n; i++){
+            dp[i] = arr[i].second;
+            for(int prev = 0; prev < i; prev++){
+                if(arr[i].second <= arr[prev].second)
+                    dp[i] = max(dp[i], dp[prev] + arr[i].second);
             }
-            next = curr;
+            maxScore = max(maxScore, dp[i]);
         }
 
-        return next[0];
+        return maxScore;
     }
 };
