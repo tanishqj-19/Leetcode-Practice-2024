@@ -28,9 +28,10 @@ public:
         n = scores.size();
 
         memset(dp, -1, sizeof(dp));
+        arr.resize(n);
 
         for(int i = 0; i<n; i++){
-            arr.push_back({ages[i], scores[i]});
+            arr[i] = {ages[i], scores[i]};
         }
 
         sort(arr.begin(), arr.end(), greater<pair<int, int>> ());
