@@ -26,7 +26,7 @@ class Solution {
             }
 
             if(!temp.empty())
-                offer = min(offer, curr[curr.size() - 1] + shop(price, temp, special));
+                offer = min(offer, curr.back() + shop(price, temp, special));
 
             // temp.clear();
 // 
