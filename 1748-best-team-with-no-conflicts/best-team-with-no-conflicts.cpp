@@ -5,19 +5,19 @@ class Solution {
 
     vector<pair<int,int>> arr;
 
-    int bestScore(vector<int> & scores, vector<int> &ages, int i, int prev){
+    int bestScore(int i, int prev){
         if(i >= n)
             return 0;
         if(dp[i][prev + 1]  != -1)
             return dp[i][prev + 1];
 
-        int notPick = bestScore(scores, ages, i + 1, prev);
+        int notPick = bestScore(i + 1, prev);
         int pick = 0;
 
         if(prev != -1 && arr[prev].first > arr[i].first && arr[i].second > arr[prev].second){
             return dp[i][prev + 1] = max(pick, notPick);
         }
-        pick = arr[i].second + bestScore(scores, ages, i + 1, i);
+        pick = arr[i].second + bestScore( i + 1, i);
         
 
         return dp[i][prev + 1] = max(pick, notPick);
@@ -35,6 +35,6 @@ public:
 
         sort(arr.begin(), arr.end(), greater<pair<int, int>> ());
 
-        return bestScore(scores, ages, 0, -1);
+        return bestScore( 0, -1);
     }
 };
