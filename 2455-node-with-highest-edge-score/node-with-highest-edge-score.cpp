@@ -10,8 +10,7 @@ public:
             sum[edges[i]] += i;
             maxSum = max(maxSum, sum[edges[i]]);
         }
-        int  node = edges.size();
-
+        
         for(int i = 0; i<n; i++){
             if(sum[i] == maxSum)
                 return i;
