@@ -2,21 +2,22 @@
 class Solution {
 public:
     int edgeScore(vector<int>& edges) {
-        unordered_map<int,ll> sum;
+
+        int n = edges.size();
+        vector<ll> sum(n, 0);
         ll maxSum = 0;
-        for(int i = 0; i<edges.size(); i++){
+        for(int i = 0; i<n; i++){
             sum[edges[i]] += i;
             maxSum = max(maxSum, sum[edges[i]]);
         }
         int  node = edges.size();
 
-        for(auto &x: sum){
-            if(x.second == maxSum){
-                node = min(node, x.first);
-            }
+        for(int i = 0; i<n; i++){
+            if(sum[i] == maxSum)
+                return i;
         }
 
-        return (int) node;
+        return -1;
 
         
 
