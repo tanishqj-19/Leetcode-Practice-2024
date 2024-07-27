@@ -1,10 +1,9 @@
 #define ll long long
 
 class Solution {
-    unordered_map<int, vector<pair<ll, int>>> adj;
     
     
-    ll shortestPath(int src, int des, vector<vector<ll>> &dp){
+    ll shortestPath(int src, int des, vector<vector<ll>> &dp,vector<vector<pair<ll, int>>>& adj){
         if(dp[src][des] != -1)
             return dp[src][des];
         if(src == des)
@@ -34,6 +33,7 @@ class Solution {
     }
 public:
     long long minimumCost(string source, string target, vector<char>& original, vector<char>& changed, vector<int>& cost) {
+        vector<vector<pair<ll, int>>> adj(26);
 
         for(int i = 0; i<original.size(); i++){
             adj[original[i] - 'a'].push_back({cost[i], (changed[i] - 'a')});
@@ -44,7 +44,7 @@ public:
         for(int i = 0; i<source.size(); i++){
             if(source[i] == target[i]) continue;
             int src = source[i] - 'a', dest = target[i] - 'a';
-            ll currCost = shortestPath(src, dest, dp);
+            ll currCost = shortestPath(src, dest, dp, adj);
             if(currCost == -1)
                 return -1;
             else
