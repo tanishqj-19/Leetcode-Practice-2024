@@ -1,56 +1,36 @@
-#define ll long long
-
 class Solution {
-    
-    
-    ll shortestPath(int src, int des, vector<vector<ll>> &dp,vector<vector<pair<ll, int>>>& adj){
-        if(dp[src][des] != -1)
-            return dp[src][des];
-        if(src == des)
-            return 0;
-        queue<pair<ll, ll>> pq;
-        pq.push({0, src});
-        vector<ll> dist(26, 1e9);
-        dist[src]  = 0;
+public:
+    long long minimumCost(string source, string target, vector<char>& original, vector<char>& changed, vector<int>& cost) {
+        vector<vector<long long>> adj(26, vector<long long>(26, 1e9));
+
+        for(int i = 0; i<26; i++) adj[i][i] = 0;
+        int size = original.size();
+        for(int i = 0; i<size; i++){
+            int u = original[i] - 'a', v = changed[i] - 'a';
+
+            adj[u][v] = min(adj[u][v], (long long) cost[i]);
+        }
+        int n = source.size();
+        long long totalCost = 0;
         
 
-        while(!pq.empty()){
-            auto [w, node] = pq.front();pq.pop();
-
-            
-            for(auto &t: adj[node]){
-                ll d = t.first, next  = t.second;
-                if(d + w < dist[next]){
-                    dp[src][next] = d + w;
-                    pq.push({d + w, next});
-                    dist[next] = d + w;
+        for(int k = 0; k<26; k++){
+            for(int i = 0; i<26; i++){
+                for(int j = 0; j<26; j++){
+                    if(adj[i][k] < 1e9 && adj[k][j] , 1e9)
+                        adj[i][j] = min(adj[i][j], adj[i][k] + adj[k][j]);
                 }
             }
         }
 
-        
-        return dp[src][des] = dist[des] == 1e9 ? -1: dist[des];
-    }
-public:
-    long long minimumCost(string source, string target, vector<char>& original, vector<char>& changed, vector<int>& cost) {
-        vector<vector<pair<ll, int>>> adj(26);
+        for(int i = 0; i<n; i++){
 
-        for(int i = 0; i<original.size(); i++){
-            adj[original[i] - 'a'].push_back({cost[i], (changed[i] - 'a')});
-        }
-
-        ll totalCost = 0;
-        vector<vector<ll>> dp(26, vector<ll>(26, -1));
-        for(int i = 0; i<source.size(); i++){
-            if(source[i] == target[i]) continue;
-            int src = source[i] - 'a', dest = target[i] - 'a';
-            ll currCost = shortestPath(src, dest, dp, adj);
-            if(currCost == -1)
+            long long curr = adj[source[i] - 'a'][target[i] - 'a'];
+            if(curr >= 1e9)
                 return -1;
-            else
-                totalCost += currCost;
+            totalCost += curr;
         }
 
-        return totalCost;
+        return totalCost ;
     }
 };
