@@ -22,6 +22,7 @@ class Solution {
             for(auto &t: adj[node]){
                 ll d = t.first, next  = t.second;
                 if(d + w < dist[next]){
+                    dp[src][next] = d + w;
                     pq.push({d + w, next});
                     dist[next] = d + w;
                 }
