@@ -3,9 +3,7 @@ public:
     int minMutation(string startGene, string endGene, vector<string>& bank) {
         vector<char> chars = {'A', 'C', 'G', 'T'};
 
-        unordered_set<string> s;
-
-        for(auto &i: bank) s.insert(i);
+        unordered_set<string> s{bank.begin(), bank.end()};
 
         if(s.find(endGene) == s.end())
             return -1;
@@ -13,15 +11,13 @@ public:
         queue<pair<int, string>> q;
 
         q.push({0, startGene});
-        unordered_map<string, bool> vis;
-        vis[startGene] = true;
-
-
+        
         while(!q.empty()){
             auto [dis, curr] = q.front(); q.pop();
 
             if(curr == endGene)
                 return dis;
+            s.erase(curr);
 
             for(int i = 0; i<curr.size(); i++){
                 string ori = curr;
@@ -29,9 +25,8 @@ public:
                 for(auto &t: chars){
                     curr[i] = t;
 
-                    if(s.find(curr) != s.end() && !vis[curr]){
+                    if(s.find(curr) != s.end()){
                         q.push({dis + 1, curr});
-                        vis[curr] = true;
                     }
                 }
 
