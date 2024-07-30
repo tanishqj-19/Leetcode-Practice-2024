@@ -6,28 +6,33 @@ public:
 
         if(n2 + n1 != n3)
             return false;
-        if(n1 == 0 && n2 == 0 && n3 == 0)
-            return true;
-        vector<vector<bool>> dp(n1 + 1, vector<bool>(n2 + 1, false));
-        dp[0][0] = 1;
+        
+        if(n1 < n2){
+            return isInterleave(s2, s1, s3);
+        }
 
-        for(int i = 0; i<=n1; i++){
-            for(int j = 0; j<=n2; j++){
+        vector<bool> dp(n2 + 1, false);
+        dp[0] = true;
+
+        for(int j = 1; j <= n2; j++){
+            dp[j] = dp[j-1] && s2[j-1] == s3[j-1];
+        }
+
+        for(int i = 1; i<=n1; i++){
+            dp[0] = dp[0] && (s1[i-1] == s3[i-1]);
+            for(int j = 1; j<=n2; j++){
                 int idx = i + j-1;
-                if(i > 0){
-                    if(s1[i-1] == s3[idx])
-                        dp[i][j] = dp[i][j] || dp[i-1][j];
-                }
+                bool one = false, two = false;
 
-                if(j > 0){
-                    if(s2[j-1] == s3[idx])
-                        dp[i][j] = dp[i][j] || dp[i][j-1];
-                }
-
+                if(s1[i-1] == s3[idx])
+                    one  = dp[j];
+                if(s2[j-1] == s3[idx])
+                    two = dp[j-1];
+                dp[j] = one || two;
             }
         }
 
-        return dp[n1][n2];
+        return dp[n2];
     }
 
     
