@@ -13,7 +13,6 @@ public:
 
         for(int i = 0; i<=n1; i++){
             for(int j = 0; j<=n2; j++){
-                bool sol = false;
                 int idx = i + j-1;
                 if(i > 0){
                     if(s1[i-1] == s3[idx])
