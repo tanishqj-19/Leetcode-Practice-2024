@@ -4,25 +4,20 @@ public:
     int minimumDeletions(string s) {
         n = s.size();
 
-        vector<int> prefix(n, 0), suffix(n, 0);
-        int b = 0, a = 0;
-        for(int i = 0; i<n; i++){
-            prefix[i] = b;
-            b += (s[i] == 'b');
-            
-        }
+        int b = 0; 
+        vector<int> dp(n + 1 , 0);
 
-        for(int i = n-1; i>=0; i--){
-            suffix[i] = a;
-            a += (s[i] == 'a');
-        }
-        int cnt = n;
-        for(int i = 0; i<n; i++){
-            cnt = min(cnt, prefix[i] + suffix[i]);
+        for(int i = 1; i<=n; i++){
+            if(s[i-1] == 'a'){
+                dp[i] = min(b, dp[i-1] + 1);
+            }else{
+                dp[i] = dp[i-1];
+                b++; 
+            }
         }
 
 
-        return cnt;
+        return dp[n];
         
     }
 };
