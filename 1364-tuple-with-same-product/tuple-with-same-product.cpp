@@ -1,4 +1,4 @@
-#define ll int
+
 
 class Solution {
 public:
@@ -10,8 +10,8 @@ public:
         int ans = 0;
         for(int i = 0; i<n; i++){
             for(int j = 0; j <i; j++){
-                ll pro = (ll) nums[i] *(ll) nums[j];
-                ans += 8 * freq[pro];
+                int pro =  nums[i] * nums[j];
+                ans += (8 * freq[pro]);
                 freq[pro]++;
             }
         }
