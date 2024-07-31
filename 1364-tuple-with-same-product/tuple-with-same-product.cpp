@@ -1,4 +1,4 @@
-#define ll long long
+#define ll int
 
 class Solution {
 public:
