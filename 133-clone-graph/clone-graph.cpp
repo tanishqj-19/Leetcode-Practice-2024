@@ -29,26 +29,48 @@ public:
         
         unordered_map<Node*, Node*> tracker;
 
-        return dfs(node, tracker);
-    }
+        Node* my_clone = new Node(node->val, {});
+        tracker[node] = my_clone;
+        queue<Node*> q;
+        q.push(node);
 
-    Node* dfs(Node* node, unordered_map<Node*, Node*> &tracker){
-        Node* cloned = new Node(node->val);
-        vector<Node*> padosi;
-        tracker[node] = cloned;
+        while(!q.empty()){
+            node =  q.front(); q.pop();
 
-
-        for(auto nei: node->neighbors){
-            if(tracker.find(nei) == tracker.end()){
-                padosi.push_back(dfs(nei, tracker));
-            }else{
-                padosi.push_back(tracker[nei]);
+            for(auto nei: node->neighbors){
+                if(tracker.find(nei) == tracker.end()){
+                    tracker[nei] = new Node(nei->val);
+                    q.push(nei);
+                }
+                tracker[node]->neighbors.push_back(tracker[nei]);
             }
         }
-        cloned->neighbors = padosi;
 
-        return cloned;
+        return my_clone;
 
+
+        // return dfs(node, tracker);
     }
+
+    
+
+    // Node* dfs(Node* node, unordered_map<Node*, Node*> &tracker){
+    //     Node* cloned = new Node(node->val);
+    //     vector<Node*> padosi;
+    //     tracker[node] = cloned;
+
+
+    //     for(auto nei: node->neighbors){
+    //         if(tracker.find(nei) == tracker.end()){
+    //             padosi.push_back(dfs(nei, tracker));
+    //         }else{
+    //             padosi.push_back(tracker[nei]);
+    //         }
+    //     }
+    //     cloned->neighbors = padosi;
+
+    //     return cloned;
+
+    // }
 };
 
