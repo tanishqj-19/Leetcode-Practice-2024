@@ -11,11 +11,11 @@ public:
         for(int i = 0; i<n; i++){
             for(int j = 0; j <i; j++){
                 int pro =  nums[i] * nums[j];
-                ans += (8 * freq[pro]);
+                ans += freq[pro];
                 freq[pro]++;
             }
         }
 
-        return ans;
+        return ans * 8;
     }
 };
