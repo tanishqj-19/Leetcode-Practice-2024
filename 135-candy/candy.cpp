@@ -22,8 +22,8 @@ public:
         while(i >= 0){
             if(rating[i] > rating[i + 1])
                 candies[i] = max(candies[i + 1] + 1, candies[i]);
-            else if(candies[i] == 0)
-                candies[i] = 1;
+            else
+                candies[i] = max( 1, candies[i]);
             i--;
             
         }
