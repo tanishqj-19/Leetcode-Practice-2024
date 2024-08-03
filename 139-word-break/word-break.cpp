@@ -1,29 +1,21 @@
 class Solution {
-    
-    bool dp[301];
-    
 public:
     bool wordBreak(string s, vector<string>& wordDict) {
         int n = s.size();
-        memset(dp, 0, sizeof(dp));
-        
 
-        for(int i =0; i<n; i++){
-            for(auto &word: wordDict){
-                int sz = word.size();
-                if(i < sz - 1)
-                    continue;
+        vector<int> dp(n + 1, 0);
+        dp[0] = 1;
+        unordered_set<string> words(wordDict.begin(), wordDict.end());
 
-                if(i == sz - 1 || dp[i - sz]){
-                    if(s.substr(i -sz  + 1, sz) == word){
-                        dp[i] = true;
-                        break;
-                    }
+        for(int i = 1; i<=n; i++){
+            for(int j = 0; j<i; j++){
+                if(dp[j] && words.count(s.substr(j, i - j))){
+                    dp[i] = true;
+                    break;
                 }
             }
         }
 
-
-        return dp[n-1];
+        return dp[n];
     }
 };
