@@ -28,9 +28,11 @@ class Solution {
     }
 
 public:
-    int minimumTimeRequired(vector<int>& jobs, int k) {
+    int minimumTimeRequired(vector<int>& jobs, int K) {
+
+        sort(jobs.begin(), jobs.end());
         n = jobs.size();
-        this->k = k;
+        k = K;
         maxWork = LLONG_MAX;
         
         work.resize(k, 0);        
