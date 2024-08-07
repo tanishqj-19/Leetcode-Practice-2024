@@ -36,7 +36,6 @@ public:
 
         if(n < 4 || sum % 4)
             return false;
-        sort(matchsticks.begin(), matchsticks.end(), greater<int>());
         int k = sum / 4;
         tar = k;
         vis.resize(n, false);
