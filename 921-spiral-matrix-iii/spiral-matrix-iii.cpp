@@ -7,9 +7,9 @@ public:
     vector<vector<int>> spiralMatrixIII(int rows, int cols, int rs, int cs) {
         vector<vector<int>>  ans;
 
-        int step = 1, d = 0;
+        int step = 1, dx = 0, dy = 1, temp;
 
-        int dir[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        // int dir[4][2] = {{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
         int maxSize = rows * cols;
         while(ans.size() < maxSize ){
 
@@ -19,10 +19,12 @@ public:
                         ans.push_back({rs, cs});
                     }
 
-                    rs += dir[d][0];
-                    cs += dir[d][1];
+                    rs += dx;
+                    cs += dy;
                 }
-                d  = (d + 1) % 4;
+                temp = dx;
+                dx = dy;
+                dy = -temp;
             }
 
             ++step;
