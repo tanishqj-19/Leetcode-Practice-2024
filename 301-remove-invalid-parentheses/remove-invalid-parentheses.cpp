@@ -19,11 +19,11 @@ public:
     vector<string> removeInvalidParentheses(string s) {
         int n = s.size();
 
-        unordered_set<string> vis;
+        unordered_map<string, bool> vis;
 
         queue<string> q;
         q.push(s);
-        vis.insert(s);
+        vis[s] = true;
 
         bool found = false;
         vector<string> ans;
@@ -41,9 +41,9 @@ public:
                 if(s[i] != '(' && s[i] != ')') continue;
                 string left = s.substr(0, i), right = s.substr(i + 1);
                 string newS = left + right;
-                if(vis.count(newS) <= 0){
+                if(vis[newS] == false){
                     q.push(newS);
-                    vis.insert(newS);
+                    vis[newS] = true;
                 }
             }
 
