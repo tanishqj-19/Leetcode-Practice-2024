@@ -1,57 +1,55 @@
 class Solution {
-
-    int countInvalid(string &s){
-        int open = 0, close = 0;
-
+    bool isValid(string &s){
+        int cnt = 0;
         for(char &c: s){
-            if(c == '('){
-                open++;
-            }else if(c == ')'){
-                if(open > 0){
-                    open--;
-                }else{
-                    close++;
-                }
+            if(c == '(')
+                cnt++;
+            else if(c == ')'){
+                if(cnt > 0)
+                    cnt--;
+                else
+                    return false;
+
             }
         }
 
-        return open + close;
+        return cnt == 0;
     }
 public:
     vector<string> removeInvalidParentheses(string s) {
-        vector<string> ans; 
-        int n = s.size();  
-        int invalid = countInvalid(s);
-        
-        ways(s, invalid, ans);
+        int n = s.size();
 
-        return ans;
+        unordered_set<string> vis;
 
-      
+        queue<string> q;
+        q.push(s);
+        vis.insert(s);
 
-    }
-private:
-    unordered_set<string> myset;
-    void ways(string s, int k, vector<string> &ans){
-        if(k < 0)
-            return;
-        if(k == 0){
-            int invalid = countInvalid(s);
-            if(invalid == 0)
+        bool found = false;
+        vector<string> ans;
+
+        while(!q.empty()){
+            s = q.front(); q.pop();
+
+            if(isValid(s)){
                 ans.push_back(s);
-            return;
-        }
-
-        for(int i = 0; i<s.size(); i++){
-            if(s[i] >= 'a' && s[i] <= 'z') continue;
-            string left = s.substr(0, i);
-            string right = s.substr(i + 1);
-            string curr = left + right;
-
-            if(myset.count(curr) <= 0){
-                myset.insert(curr);
-                ways(curr, k-1, ans);
+                found = true;
             }
+            if(found) continue;
+
+            for(int i = 0; i <s.size(); i++){
+                if(s[i] != '(' && s[i] != ')') continue;
+                string left = s.substr(0, i), right = s.substr(i + 1);
+                string newS = left + right;
+                if(vis.count(newS) <= 0){
+                    q.push(newS);
+                    vis.insert(newS);
+                }
+            }
+
+        
+        
         }
+        return ans;
     }
 };
