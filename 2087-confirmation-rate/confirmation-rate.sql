@@ -1,11 +1,9 @@
-SELECT s.user_id,
-    ROUND(
-        COALESCE(
-            (SELECT COUNT(*) FROM Confirmations c WHERE c.action = 'confirmed' AND c.user_id = s.user_id) 
-            / NULLIF((SELECT COUNT(*) FROM Confirmations c WHERE c.user_id = s.user_id), 0), 
-        0), 2) AS confirmation_rate
-FROM Signups s;
-
+SELECT s.user_id, ROUND(AVG(IF(c.action = "confirmed", 1, 0)), 2) 
+    AS confirmation_rate
+FROM Signups s
+LEFT JOIN Confirmations c
+ON s.user_id = c.user_id
+GROUP BY user_id;
 
 
 
