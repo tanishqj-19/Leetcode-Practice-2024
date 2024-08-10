@@ -11,11 +11,7 @@ class Solution {
         }
         return;
     }
-public:
-    int regionsBySlashes(vector<string>& mat) {
-        int n = mat.size(), m = mat[0].size();
-        vector<vector<int>> grid(n * 3, vector<int>(m * 3, 0));
-
+    void buildGrid(vector<vector<int>> &grid, vector<string> &mat,int &n, int &m){
         for(int i = 0; i<n; i++){
             for(int j = 0; j<m; j++){
                 if(mat[i][j] == '/'){
@@ -25,6 +21,13 @@ public:
                 }
             }
         }
+    }
+public:
+    int regionsBySlashes(vector<string>& mat) {
+        int n = mat.size(), m = mat[0].size();
+        vector<vector<int>> grid(n * 3, vector<int>(m * 3, 0));
+
+        buildGrid(grid, mat, n, m);
 
         n = grid.size(), m = grid[0].size();
         int cnt = 0;
