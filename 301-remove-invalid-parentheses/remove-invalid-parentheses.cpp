@@ -1,32 +1,29 @@
 class Solution {
 
     int countInvalid(string &s){
-        stack<char> st;
+        int open = 0, close = 0;
 
-        for(int i = 0; i<s.size(); i++){
-            if(s[i] == '('){
-                st.push('(');
-            }else if(s[i] == ')'){
-                if(st.empty() || st.top() == ')'){
-                    st.push(')');
-                }else if(st.top() == '(')
-                    st.pop();
+        for(char &c: s){
+            if(c == '('){
+                open++;
+            }else if(c == ')'){
+                if(open > 0){
+                    open--;
+                }else{
+                    close++;
+                }
             }
         }
 
-        return st.size();
+        return open + close;
     }
 public:
     vector<string> removeInvalidParentheses(string s) {
         vector<string> ans; 
         int n = s.size();  
-
         int invalid = countInvalid(s);
         
         ways(s, invalid, ans);
-
-        
-        
 
         return ans;
 
