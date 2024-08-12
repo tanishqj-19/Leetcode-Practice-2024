@@ -1,8 +1,7 @@
 SELECT employee_id, department_id
-FROM Employee
-WHERE primary_flag = 'Y'
-UNION
-SELECT employee_id, department_id
-FROM Employee
-GROUP BY employee_id
-HAVING COUNT(employee_id) = 1
+FROM Employee e
+WHERE primary_flag = 'Y' OR (
+    SELECT COUNT(*)
+    FROM Employee a
+    WHERE e.employee_id = a.employee_id
+) = 1
