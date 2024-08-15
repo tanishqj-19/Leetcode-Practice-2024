@@ -1,9 +1,9 @@
 class Solution {
 public:
     bool lemonadeChange(vector<int>& bills) {
-        int n = bills.size();
+        
 
-        int five = 0, ten = 0, tweenty = 0 ;
+        int five = 0, ten = 0;
 
 
         for(int &i: bills){
@@ -15,7 +15,6 @@ public:
                     return false;
                 five--;
             }else{
-                tweenty++;
                 
                 if(ten > 0 && five > 0){
                     five--;
