@@ -6,19 +6,17 @@ public:
         int sz = original.size();
 
         if(m * n != sz) 
-            return {};
+            return ans;
 
         for(int i = 0; i < sz;){
             vector<int> temp;
 
-            int j = 0;
-            while(j < n){
+            for(int j = 0; j<n; j++){
                 temp.push_back(original[i++]);
-                j++;
             }
 
-            if(!temp.empty())
-                ans.push_back(temp);
+            ans.push_back(temp);
+            temp.clear();
         }
 
 
