@@ -3,17 +3,17 @@
 class Solution {
 public:
     int chalkReplacer(vector<int>& chalk, int k) {
-        int  i = 0, n = chalk.size();
-        ll sum = 0;
+        int  i = 0;
+        int sum = 0;
         for(int &x: chalk){
-            sum = (sum + (ll) x);
+            sum = (sum +  x);
             if(sum > k)
                 break;
         }
-        ll remain = k % sum;
+        k = k % sum;
 
-        while(chalk[i] <= remain){
-            remain -= chalk[i++];
+        while(chalk[i] <= k){
+            k -= chalk[i++];
         }
         
 
