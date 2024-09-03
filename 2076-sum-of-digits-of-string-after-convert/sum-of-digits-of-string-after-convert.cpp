@@ -2,31 +2,37 @@ class Solution {
 public:
     int getLucky(string s, int k) {
         
-        string sum = "";
+        int curr = 0;
+
         for(char &c: s){
             int x = (c - 'a') + 1;
-            sum += to_string(x);
+            if(x < 10){
+                curr += x;
+            }else{
+                curr += (x % 10 + x / 10);
+            }
         }
         
-
+        k-= 1;
     
-        int curr = 0;
-        while(k--){
-
-            curr = 0;
-
-            for(char& c: sum){
-                curr += (c - '0');
-            }
-            sum = "";
-            sum += to_string(curr);
-
-        
+        while(k-- && curr >= 10){
+            curr = sum(curr);
             
         }
 
         return curr;
 
 
+    }
+
+    int sum(int x){
+        int val = 0;
+
+        while(x){
+            val += x % 10;
+            x /= 10;
+        }
+
+        return val;
     }
 };
