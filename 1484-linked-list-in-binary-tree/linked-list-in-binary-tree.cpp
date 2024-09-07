@@ -1,23 +1,23 @@
 class Solution {
     vector<int> list;
 
-    bool solve(TreeNode* root){
+    bool solve(TreeNode* root, ListNode* head){
         if(!root)
             return false;
         
-        if(dfs(root, 0))
+        if(dfs(root, head))
             return true;
-        return solve(root->left) || solve(root->right);
+        return solve(root->left, head) || solve(root->right, head);
     }
 
-    bool dfs(TreeNode* root, int idx){
-        if(idx == list.size())
+    bool dfs(TreeNode* root, ListNode* head){
+        if(!head)
             return true;
-        if(!root || root->val != list[idx])
+        if(!root || root->val != head->val)
             return false;
         
         
-        return dfs(root->left, idx + 1) || dfs(root->right, idx + 1);
+        return dfs(root->left, head->next) || dfs(root->right, head->next);
 
     }
 
@@ -26,12 +26,9 @@ class Solution {
 public:
     bool isSubPath(ListNode* head, TreeNode* root) {
 
-        while(head){
-            list.push_back(head->val);
-            head = head->next;
-        }
+        
 
-        return solve(root);
+        return solve(root, head);
 
 
 
