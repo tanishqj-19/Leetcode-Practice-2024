@@ -1,36 +1,41 @@
+#define ptl pair<TreeNode*, ListNode*>
 class Solution {
-    vector<int> list;
-
-    bool solve(TreeNode* root, ListNode* head){
-        if(!root)
-            return false;
-        
-        if(dfs(root, head))
-            return true;
-        return solve(root->left, head) || solve(root->right, head);
-    }
-
-    bool dfs(TreeNode* root, ListNode* head){
-        if(!head)
-            return true;
-        if(!root || root->val != head->val)
-            return false;
-        
-        
-        return dfs(root->left, head->next) || dfs(root->right, head->next);
-
-    }
-
-    
-
 public:
     bool isSubPath(ListNode* head, TreeNode* root) {
+        stack<ptl> st;
 
-        
-
-        return solve(root, head);
-
+        st.push({root, head});
 
 
+        while(!st.empty()){
+            auto [node, list] = st.top(); st.pop();
+
+            if(matching(node, list))
+                return true;
+            
+            if(node->left)
+                st.push({node->left, list});
+            if(node->right)
+                st.push({node->right, list});
+        }
+
+        return false;
+    }
+private:
+    bool matching(TreeNode* root, ListNode* head){
+        while(root && head){
+            if(root->val != head->val)
+                return false;
+            head = head->next;
+
+            if(head){
+                if(root->left && matching(root->left, head))
+                    root = root->left;
+                else
+                    root = root->right;
+            }
+        }
+
+        return head == NULL;
     }
 };
