@@ -13,28 +13,26 @@ public:
         }
 
 
-        int least = 0;
-        int cycle = n + 1;
+        int least = 0, cycle, task;
         while(!pq.empty()){
             vector<int> curr;
-            int i = 0;
-
-            for(; i < cycle && !pq.empty(); i++){
-                curr.push_back(pq.top()); pq.pop();
+            cycle = n + 1;
+            task = 0;
+            while(cycle-- && !pq.empty()){
+                if(pq.top() > 1)
+                    curr.push_back(pq.top() - 1);
+                pq.pop();
+                task++;
             }
-
-            for(int j = 0; j<curr.size(); j++){
-                if(--curr[j] > 0)
-                    pq.push(curr[j]);
-            }
-
-            if(!pq.empty())
-                least += cycle;
-            else
-                least += i;
-
+            
+            for(auto &x:  curr)
+                pq.push(x);
             
 
+            if(!pq.empty())
+                least += (n + 1);
+            else
+                least += task;
 
         }
 
