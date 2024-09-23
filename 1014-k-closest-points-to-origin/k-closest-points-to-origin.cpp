@@ -1,12 +1,12 @@
 class Solution {
 public:
     vector<vector<int>> kClosest(vector<vector<int>>& points, int k) {
-        priority_queue<pair<long long, pair<int, int>>>pq;
+        priority_queue<pair<double, pair<int, int>>>pq;
 
         for(auto& point: points){
             
             long long x = point[0], y = point[1];
-            long long d = x * x + y * y;
+            double d = (double) sqrt((x * x + y * y));
 
             pq.push({d, {x, y}});
 
