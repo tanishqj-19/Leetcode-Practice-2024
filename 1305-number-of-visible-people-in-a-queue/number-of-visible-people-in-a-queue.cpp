@@ -6,15 +6,15 @@ public:
         
         stack<int> st;
 
-        for(int i = 0; i<n; i++){
+        for(int i = n-1; i>=0; i--){
 
-            while(!st.empty() && heights[st.top()] <= heights[i]){
-                answer[st.top()]++;
+            while(!st.empty() && heights[i] > heights[st.top()] ){
+                answer[i]++;
                 st.pop();
             }
 
             if(!st.empty())
-                answer[st.top()]++;
+                answer[i]++;
             st.push(i);
         }
 
