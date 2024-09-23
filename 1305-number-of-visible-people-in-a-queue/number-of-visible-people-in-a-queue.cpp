@@ -8,7 +8,7 @@ public:
 
         for(int i = 0; i<n; i++){
 
-            while(!st.empty() && heights[st.top()] < heights[i]){
+            while(!st.empty() && heights[st.top()] <= heights[i]){
                 answer[st.top()]++;
                 st.pop();
             }
