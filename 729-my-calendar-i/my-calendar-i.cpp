@@ -1,5 +1,5 @@
 class MyCalendar {
-    vector<pair<int, int>> arr;
+    set<pair<int, int>> s;
 public:
     MyCalendar() {
         
@@ -7,14 +7,19 @@ public:
     
     bool book(int start, int end) {
         
+        auto it = s.lower_bound({start,end});
 
-        for(auto &x: arr){
-            if(x.first < end && start < x.second){
+        if(it != s.end() && it->first < end)
+            return false;
+        
+        if(it != s.begin()){
+            auto previous = prev(it);
+
+            if(previous->second > start)
                 return false;
-            }
         }
 
-        arr.push_back({start, end});
+        s.insert({start, end});
         return true;
 
 
