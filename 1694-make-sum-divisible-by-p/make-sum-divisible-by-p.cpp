@@ -20,11 +20,11 @@ public:
 
         for(int i = 0; i<n; i++){
             curr  = (curr + nums[i]) % p;
-            int need = (curr % p - r + p) % p;
+            int need = (curr - r + p) % p;
             if(mp.find(need) != mp.end())
                 ans = min(ans, i - mp[need]);
             
-            mp[curr % p] = i;
+            mp[curr] = i;
 
         }
 
