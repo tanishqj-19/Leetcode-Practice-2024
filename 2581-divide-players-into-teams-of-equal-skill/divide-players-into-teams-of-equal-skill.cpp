@@ -5,30 +5,36 @@ public:
     long long dividePlayers(vector<int>& skill) {
         int n = skill.size();
 
-        int k = accumulate(skill.begin(), skill.end(), 0) / (n/2);
         ll sum = 0;
+        vector<int> freq(1001, 0);
 
-        int cnt = 0;
-
-        unordered_map<int, int> mp;
-        
-        for(int i = 0; i<n; i++){
-            
-            
-            if(mp.find(k - skill[i]) != mp.end()){
-                cnt++;
-                mp[k-skill[i]]--;
-                
-                if(mp[k-skill[i]] <= 0)
-                    mp.erase(k-skill[i]);
-                sum = (sum + (ll) skill[i] * (k - skill[i]));
-                
-            }else{
-                mp[skill[i]]++;
-            }
-            
+        for(auto &i: skill){
+            sum += i;
+            freq[i]++;
         }
 
-        return cnt >= n/2 ? sum : -1;
+
+        if(sum % (n/2) != 0)
+            return -1;
+        int k = sum / (n/2), need;
+
+        ll totalAns = 0;
+
+        for(int i = 0; i<n; i++){
+            need = k - skill[i];
+
+            if(freq[need] == 0){
+                return -1;
+            }else{
+                freq[need]--;
+                totalAns += (ll) (need * skill[i]);
+            }
+        }
+
+        return totalAns / 2;
+
+        
+
+    
     }
 };
