@@ -20,14 +20,8 @@ public:
                 time.push(pq.top().second); pq.pop();
             }
 
-            int currChair;
-
-            if(!time.empty()){
-                currChair = time.top(); time.pop();
-            }else{
-                currChair = pq.top().second + 1;
-            }
-
+            int currChair = time.top(); time.pop();
+        
             pq.push({a[1], currChair});
             if(a[0] == k){
                 return currChair;
