@@ -25,7 +25,7 @@ public:
             if(!time.empty()){
                 currChair = time.top(); time.pop();
             }else{
-                currChair = pq.top().second;
+                currChair = pq.top().second + 1;
             }
 
             pq.push({a[1], currChair});
