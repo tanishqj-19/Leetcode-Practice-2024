@@ -2,13 +2,10 @@ class Solution {
 public:
     int minGroups(vector<vector<int>>& intervals) {
 
-        int l =INT_MAX, r = 0;
-        for(auto &x: intervals){
-            l = min(l, x[0]);
-            r = max(r, x[1]);
-        }
+        int l =1, r = 1e6 + 2;
+        
 
-        vector<int> lineSweep(r + 2, 0);
+        vector<int> lineSweep(r, 0);
 
         for(auto &x: intervals){
             lineSweep[x[0]]++;
@@ -17,7 +14,7 @@ public:
 
         int minGroups = 0, currGroup = 0;
 
-        for(int i = l; i <= r + 1; i++){
+        for(int i = l; i < r; i++){
             currGroup += lineSweep[i];
             minGroups = max(minGroups, currGroup);
         }
