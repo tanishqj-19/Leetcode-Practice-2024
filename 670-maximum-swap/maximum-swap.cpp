@@ -4,23 +4,22 @@ public:
         string s  = to_string(num);
 
         int  n  = s.size();
+        int idx1 = -1, idx2 = -1, maxRight = -1;
 
-        vector<int> maxRight(n);
+        for(int i = n-1; i>=0; i--){
 
-        maxRight[n-1] = n-1;
-
-        for(int i = n-2; i>=0; i--){
-            maxRight[i] = (s[i] > s[maxRight[i + 1]] ? i : maxRight[i + 1]);
-        }
-
-        for(int i = 0; i<n; i++){
-            if(s[i] < s[maxRight[i]] && i < maxRight[i]){
-                swap(s[i], s[maxRight[i]]);
-
-                return stoi(s);
+            if(maxRight == -1 || s[i] > s[maxRight]){
+                maxRight = i;
+            }else if(s[i] < s[maxRight]){
+                idx1 = i;
+                idx2 = maxRight;
             }
         }
 
-        return num;
+        if(idx1 != -1 && idx2 != -1){
+            swap(s[idx1], s[idx2]);
+        }
+
+        return stoi(s);
     }
 };
