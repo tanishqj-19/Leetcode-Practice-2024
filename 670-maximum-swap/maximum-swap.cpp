@@ -14,7 +14,7 @@ public:
         }
 
         for(int i = 0; i<n; i++){
-            if(s[i] < s[maxRight[i]]){
+            if(s[i] < s[maxRight[i]] && i < maxRight[i]){
                 swap(s[i], s[maxRight[i]]);
 
                 return stoi(s);
