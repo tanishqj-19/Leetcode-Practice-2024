@@ -6,12 +6,12 @@ public:
         int n  = s.size();
         
         for(int i = 0; i<n; i++){
-            string temp = s;
+            
             for(int j = i + 1; j<n; j++){
-                swap(temp[i], temp[j]);
+                swap(s[i], s[j]);
 
-                num = max(num, stoi(temp));
-                swap(temp[i], temp[j]);
+                num = max(num, stoi(s));
+                swap(s[i], s[j]);
 
             }
         }
