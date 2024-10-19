@@ -3,19 +3,23 @@ public:
     char findKthBit(int n, int k) {
         if(n == 1)
             return '0';
-        
-        int size = 1 << n;
 
-        if(k < size/2){
-            return findKthBit(n-1, k);
-        }else if(k == size / 2){
-            return '1';
-        }else{
-            char temp = findKthBit(n-1, size - k);
+        int len = (1 << n);
+        int count = 0;
 
-            return (temp == '0') ? '1' : '0';
+        while(k > 1){
 
+            if(k == len / 2){
+                return count % 2 == 0 ? '1' : '0';
+            }
 
+            if(k > len / 2){
+                k = len - k;
+                count++;
+            }
+            len /= 2;
         }
+
+        return count % 2 == 0 ? '0' : '1';
     }
 };
