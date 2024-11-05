@@ -3,9 +3,6 @@ public:
     int minChanges(string s) {
         int n = s.size();
 
-        if(n == 2){
-            return s[0] != s[1];
-        }
         int cnt = 0;
 
 
