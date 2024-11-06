@@ -1,26 +1,36 @@
 class Solution {
-
-    
 public:
     bool canSortArray(vector<int>& nums) {
         int n = nums.size();
 
-        for(int i = 0; i <n; i++){
-            int minVal, currVal;
-            for(int j = 0; j<n-i-1; j++){
-                if(nums[j] <= nums[j + 1]){
-                    continue;
-                }else{
-                    minVal = __builtin_popcount(nums[j + 1]);
-                    currVal = __builtin_popcount(nums[j]);
 
-                    if(minVal != currVal)
-                        return false;
-                    swap(nums[j], nums[j + 1]);
+        int maxi = nums[0], mini = nums[0];
+        int count = __builtin_popcount(nums[0]);
+        int maxPrev = INT_MIN;
+
+        for(int i = 1; i<n; i++){
+
+            int curr = __builtin_popcount(nums[i]);
+
+            if(curr == count){
+                maxi = max(maxi, nums[i]),
+                mini = min(mini, nums[i]);
+
+            }else{
+                if(mini < maxPrev){
+                    return false;
                 }
-            }
 
+
+                maxPrev = maxi;
+                maxi = mini = nums[i];
+                count = curr;
+            }
         }
+
+        if(mini < maxPrev)
+            return false;
+
         return true;
     }
 };
