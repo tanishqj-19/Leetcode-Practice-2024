@@ -20,20 +20,19 @@ public class Solution {
         PrimeNumber();
         int n = nums.Length;
 
-        int prev = -1;
-        for(int i = 0; i<n; i++){
-            int curr = nums[i];
-            for(int j = nums[i]-1; j >= 2; j--){
-                if(isPrime[j] && (nums[i] - j) > prev){
-                    Console.Write(j + " ");
-                    curr = nums[i] - j;
+        int currVal = 1, i =0;
 
-                    break;
-                }
-            }
-            if(prev >= curr)
+        while(i < n){
+            int diff = nums[i] - currVal;
+
+            if(diff < 0)
                 return false;
-            prev = curr;
+            
+
+            if(isPrime[diff] || diff == 0){
+                i++;
+            }
+            currVal++;
         }
         return true;
     }
