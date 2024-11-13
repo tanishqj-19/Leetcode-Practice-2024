@@ -7,12 +7,14 @@ public class Solution {
         while(i < j){
             int sum = nums[i] + nums[j];
 
-            if(sum < k){
+            while(i < j && nums[i] + nums[j] < k){
                 count += (j - i);
                 i++;
-            }else{
-                j--;
+
             }
+
+            
+            j--;
         }
 
         return count;
