@@ -5,31 +5,19 @@ public:
         int n = nums.size();
 
         int i = 0, j = 0;
-        long long sum = 0;
-        long long maxSum = 0;
+        long long maxSum = 0, sum = 0;
         while(j < n){
-            sum += nums[j];
-            mp[nums[j]]++;
+            
+            int lastIdx = mp.count(nums[j]) ? mp[nums[j]] : -1;
 
-            while(i < j && mp.size() > k){
-                mp[nums[i]]--;
-                sum -= nums[i];
-
-                if(mp[nums[i]] == 0)
-                    mp.erase(nums[i]);
-                i++;
+            while(i <= lastIdx || j - i + 1 > k){
+                sum -= nums[i++];
             }
+            mp[nums[j]] = j;
+            sum += nums[j];
 
-            if(mp.size() == k){
-                while(j - i + 1 > k){
-                    sum -= nums[i];
-                    mp[nums[i]]--;
-                    if(mp[nums[i]] == 0)
-                        mp.erase(nums[i]);
-                    i++;
-                }
-                if(mp.size() == k)
-                    maxSum = max(maxSum, sum);
+            if(j - i + 1 == k){
+                maxSum = max(maxSum, sum);
             }
             j++;
 
