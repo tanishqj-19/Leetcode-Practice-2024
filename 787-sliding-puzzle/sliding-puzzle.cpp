@@ -2,13 +2,11 @@ class Solution {
 public:
     int slidingPuzzle(vector<vector<int>>& board) {
         string state = "", k = "123450";
-        int src= 0;
+        
         for(int i = 0; i<2; i++){
             for(int j = 0; j < 3; j++){
                 state += (board[i][j] + '0');
-                if(state.back() == '0'){
-                    src = state.size() - 1;
-                }
+                
             }
         }
 
