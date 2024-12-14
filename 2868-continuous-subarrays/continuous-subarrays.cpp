@@ -8,7 +8,7 @@ public:
         while(j < n){
             freq[nums[j]]++;
             
-            while(i < n && freq.rbegin()->first - freq.begin()-> first > 2){
+            while(i < n && prev(freq.end())->first - freq.begin()-> first > 2){
                 freq[nums[i]]--;
                 if(freq[nums[i]] == 0){
                     freq.erase(nums[i]);
