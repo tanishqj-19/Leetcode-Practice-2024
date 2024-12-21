@@ -1,20 +1,19 @@
 class Solution {
-    vector<long long> dp;
     long long dfs(vector<vector<int>> &adj,  int &components, vector<bool> &vis, vector<int> &values, int node, int k) {
         vis[node] = true;
-
+        long long sum = 0;
         for (auto &nei : adj[node]) {
             if (!vis[nei]) {
-               dp[node] +=  dfs(adj,  components, vis, values, nei, k);
+               sum +=  dfs(adj,  components, vis, values, nei, k);
             }
         }
 
-        if (dp[node] % k == 0) {
+        sum += values[node];
+        if (sum % k == 0) {
             components++;
-            
         }
 
-        return dp[node];
+        return sum;
     }
 
 public:
@@ -27,7 +26,6 @@ public:
             adj[e[1]].push_back(e[0]);
         }
 
-        for(int i = 0; i<n; i++) dp.push_back(values[i]);
 
         int components = 0;
         vector<bool> vis(n, false);
